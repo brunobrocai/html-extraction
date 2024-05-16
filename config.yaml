@@ -1,0 +1,17 @@
+stern_gesungheit:
+  irrelevant_subdomains:
+    - template=gallery
+    - /podcast--
+    - /themen/
+    - --video--
+  metadata_keep:
+    - description
+    - date
+    - last-modified
+    - buildDate
+    - og:locale
+    - og:type
+    - og:title
+    - og:description
+    - article:opinion
+    - og:url
