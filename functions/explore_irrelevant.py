@@ -21,6 +21,94 @@ def get_subdomains(urls, print_=False):
     return subdomains
 
 
+def get_common_bytepairs(
+    urls, iterations=100, print_=False, all_subdomains=False
+):
+    if not all_subdomains:
+        url_ends = [url.split('/')[-1] for url in urls]
+    else:
+        url_ends = urls
+    inventory = set()
+    translations = {}
+    iteration = 0
+    for end in url_ends:
+        for char in end:
+            if char not in inventory:
+                inventory.add(char)
+                translations[char] = iteration
+                iteration += 1
+
+    url_ends = [[translations[char] for char in end] for end in url_ends]
+
+    for n in range(iteration, iteration+iterations):
+        pairs = {}
+        for end in url_ends:
+            for i in range(len(end) - 1):
+                pairs[(end[i], end[i + 1])] = pairs.get(
+                    (end[i], end[i + 1]), 0
+                ) + 1
+        highest_pair = max(pairs, key=pairs.get)
+        inventory.add(highest_pair)
+        translations[highest_pair] = n
+
+        new_url_ends = []
+        for end in url_ends:
+            new_end = []
+            skip = False
+            for i, char in enumerate(end):
+                if skip:
+                    skip = False
+                    continue
+                if (
+                    char == highest_pair[0]
+                    and i < len(end) - 1 and end[i + 1] == highest_pair[1]
+                ):
+                    new_end.append(n)
+                    skip = True
+                else:
+                    new_end.append(char)
+            new_url_ends.append(new_end)
+        url_ends = new_url_ends
+
+    backtranslations = backtranslate(translations)
+
+    if print_:
+        for bytepair in backtranslations:
+            if len(bytepair) > 1:
+                print(bytepair)
+
+    return backtranslations
+
+
+def flatten_tuples(lst):
+    flattened_list = []
+    for item in lst:
+        if isinstance(item, tuple):
+            flattened_list.extend(item)
+        else:
+            flattened_list.append(item)
+    return flattened_list
+
+
+def backtranslate(translations):
+    inverted_transl = {v: k for k, v in translations.items()}
+    backtranslations = set()
+    for key in translations:
+        if isinstance(key, str):
+            backtranslations.add(key)
+        else:
+            pair = [key[0], key[1]]
+            while True:
+                if all(isinstance(element, str) for element in pair):
+                    break
+                for i, element in enumerate(pair):
+                    if isinstance(element, int):
+                        pair[i] = inverted_transl[element]
+                pair = flatten_tuples(pair)
+            backtranslations.add(''.join(pair))
+    return backtranslations
+
+
 def list_key(json_dir, key):
     """Lists all values of a key in a directory of json files."""
     urls = set()
