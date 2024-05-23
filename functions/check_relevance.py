@@ -1,5 +1,5 @@
 import re
-from . import config_parsing
+from . import config_parsing, checker_functions
 
 
 def is_relevant(url, irrel_pattern=None, irrel_pattern_list=None):
@@ -21,6 +21,7 @@ def make_relevance_checks(config_section):
 
     def relevance_checks(data):
         for function in checker_funcs:
+            function = getattr(checker_functions, function)
             if not function(data):
                 return False
         if not is_relevant(data["url"], irrel_pattern_list=irrel_domains):

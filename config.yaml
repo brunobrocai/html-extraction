@@ -15,3 +15,38 @@ stern_gesundheit:
     - og:description
     - article:opinion
     - og:url
+  checker_functions:
+    - stern_is_free
+
+apothekenumschau:
+  irrelevant_subdomains:
+    - .pdfhttps:/
+    - /unsere-marken/
+    - /produkte/
+    - /rss/
+    - /impressum/
+    - /kontakt/
+    - /ueber-uns/
+    - /img/
+    - /unterhaltung/memo
+    - /quiz-
+    - /unterhaltung/(?!interview/)[\w/-]+
+    - /rezepte/
+    - /buchstabe-[a-z]-
+  metadata_keep:
+    - author
+    - article:section
+    - article:tag
+    - publisher
+    - article:author
+    - keywords
+    - description
+    - date
+    - og:type
+    - og:site_name
+    - og:title
+    - og:description
+    - og:updated_time
+    - article:modified_time
+    - article:published_time
+  checker_functions:
