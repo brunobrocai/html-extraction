@@ -253,21 +253,17 @@ class ArticleCleaner(Cleaner):
         if text is None:
             return None
 
+        # Format lists to be correctly recognized by markdown
         text = re.sub(r'(?m)\n(.*?)\n-$', r'\n\- \1', text)
 
-        if text[0] != '#' and not heading_key:
-            try:
-                text = f"# {meta_dict['h1']}\n\n{text}"
-            except KeyError:
-                try:
-                    if meta_dict['title'] is None
-                    text = f"# {meta_dict['title']}\n\n{text}"
-                except KeyError:
-                    pass
-        elif text[0] != '#' and heading_key:
-            try:
-                text = f"# {meta_dict[heading_key]}\n\n{text}"
-            except KeyError:
-                pass
+        # If there is no markdown heading, add one from the meta_dict
+        if text[0] != '#':
+            heading = (
+                meta_dict.get(heading_key)
+                or meta_dict.get('h1')
+                or meta_dict.get('title')
+            )
+            if heading:
+                text = f"# {heading}\n\n{text}"
 
         return text

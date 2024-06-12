@@ -25,5 +25,5 @@ def get_h1(soup):
     return 'h1', None
 
 
-def no_keywords(*args, **kwargs):
+def no_keywords():
     return []
