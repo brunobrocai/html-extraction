@@ -1,5 +1,5 @@
 import re
-from . import meta_funcs
+from . import _meta_functions
 
 
 class MetaRetriever():
@@ -70,7 +70,7 @@ class MetaRetriever():
     def fill_other_info(self, soup):
         other_info = {}
         for function in self.other_info_funcs:
-            function = getattr(meta_funcs, function)
+            function = getattr(_meta_functions, function)
             key, value = function(soup)
             other_info[key] = value
 
@@ -81,7 +81,7 @@ class MetaRetriever():
         other_info = self.fill_other_info(soup)
         if self.kywd_extraction_func:
             kywd_extraction_func = getattr(
-                meta_funcs, self.kywd_extraction_func
+                _meta_functions, self.kywd_extraction_func
             )
             keywords = kywd_extraction_func(soup)
             meta_dict["keywords"] = keywords

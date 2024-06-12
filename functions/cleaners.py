@@ -7,7 +7,7 @@ from LaBroDoodle import corpusdirs
 from bs4 import BeautifulSoup as BS
 import trafilatura
 from . import meta_retrieval
-from . import checker_functions
+from . import _checker_functions
 from . import utils
 
 
@@ -130,7 +130,7 @@ class Cleaner():
                     config_params[key] = []
             try:
                 for func in config_params['checker_functions']:
-                    func = getattr(checker_functions, func)
+                    func = getattr(_checker_functions, func)
             except AttributeError as excep:
                 raise AttributeError(
                     "One or more functions in the 'checker_functions' list "
@@ -257,13 +257,10 @@ class ArticleCleaner(Cleaner):
 
         if text[0] != '#' and not heading_key:
             try:
-                if meta_dict['h1'] is None:
-                    raise KeyError
                 text = f"# {meta_dict['h1']}\n\n{text}"
             except KeyError:
                 try:
-                    if meta_dict['title'] is None:
-                        raise KeyError
+                    if meta_dict['title'] is None
                     text = f"# {meta_dict['title']}\n\n{text}"
                 except KeyError:
                     pass
