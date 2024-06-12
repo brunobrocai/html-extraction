@@ -1,6 +1,8 @@
 import re
 
 
+# +++++Keyword Getters+++++
+
 def keyword_getter_basic(soup):
     separator_pattern = r",|;"
     keywords = soup.find("meta", attrs={"name": "keywords"})
@@ -18,12 +20,14 @@ def keyword_getter_basic(soup):
     return None
 
 
+def no_keywords():
+    return []
+
+
+# +++++Other Info Getters+++++
+
 def get_h1(soup):
     h1 = soup.find("h1")
     if h1:
         return 'h1', h1.get_text(strip=True)
     return 'h1', None
-
-
-def no_keywords():
-    return []

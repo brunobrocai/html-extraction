@@ -6,7 +6,7 @@ from tqdm import tqdm
 from LaBroDoodle import corpusdirs
 from bs4 import BeautifulSoup as BS
 import trafilatura
-from . import meta_retrieval
+from . import meta_retriever
 from . import _checker_functions
 from . import utils
 
@@ -155,7 +155,7 @@ class ArticleCleaner(Cleaner):
     @meta_retriever.setter
     def meta_retriever(self, value):
         if (
-            not isinstance(value, meta_retrieval.MetaRetriever)
+            not isinstance(value, meta_retriever.MetaRetriever)
             and value is not None
         ):
             raise ValueError("MetaRetriever must be an instance of the "
