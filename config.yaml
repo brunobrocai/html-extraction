@@ -33,6 +33,9 @@ apothekenumschau:
     - /unterhaltung/(?!interview/)[\w/-]+
     - /rezepte/
     - /buchstabe-[a-z]-
+    - \.ico
+    - /wirkstofflisten/
+    - /beipackzettel/
   metadata_keep:
     - author
     - article:section
@@ -50,3 +53,48 @@ apothekenumschau:
     - article:modified_time
     - article:published_time
   checker_functions:
+  other_info_funcs:
+    - get_h1
+
+
+focus_gesundheit:
+  irrelevant_subdomains:
+    - /video/
+    - /tests/
+    - ^(?!.*\.html$).*$
+  metadata_keep:
+    - description
+    - og:description
+    - date
+    - author
+    - fol_ct
+    - fol:articleid
+    - article:content_tier
+  checker_functions:
+  other_info_funcs:
+    - get_h1
+
+
+paradisi_forum:
+  irrelevant_subdomains:
+    - /themen/formel
+  metadata_keep:
+    - description
+  checker_functions:
+    - paradisi_forum_is_health
+
+
+tonline_gesundheit:
+  irrelevant_subdomains:
+    - /video/
+    - /tests/
+    - ^(?!.*\.html$).*$
+  metadata_keep:
+    - language
+    - company
+    - description
+    - article:opinion
+    - article:published_time
+  checker_functions:
+  other_info_funcs:
+    - get_h1

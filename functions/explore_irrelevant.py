@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from tqdm import tqdm
 
 
 def get_subdomains(urls, print_=False):
@@ -149,7 +150,10 @@ def apply_function_dir(directory, function, *args):
     """Apply a function to all files in a directory."""
     matching_files = []
     for root, _, files in os.walk(directory):
-        for file in files:
+        for file in tqdm(
+            files,
+            desc=f'Processing {directory}', total=len(files)
+        ):
             if file.endswith('.json'):
                 filepath = os.path.join(root, file)
                 with open(filepath, 'r', encoding='utf-8') as f:

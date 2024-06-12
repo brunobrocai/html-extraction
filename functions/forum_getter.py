@@ -31,3 +31,11 @@ def paradisi_entries(soup):
         posts.append(post)
 
     return posts
+
+
+if __name__ == '__main__':
+    from bs4 import BeautifulSoup
+    with open('test_files/paradisi_test1.html', 'r', encoding='utf-8') as f:
+        soup = BeautifulSoup(f, 'html.parser')
+        entries = paradisi_entries(soup)
+        print(entries)

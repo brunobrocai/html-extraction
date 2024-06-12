@@ -20,10 +20,11 @@ def make_relevance_checks(config_section):
     )
 
     def relevance_checks(data):
-        for function in checker_funcs:
-            function = getattr(checker_functions, function)
-            if not function(data):
-                return False
+        if checker_funcs is not None:
+            for function in checker_funcs:
+                function = getattr(checker_functions, function)
+                if not function(data):
+                    return False
         if not is_relevant(data["url"], irrel_pattern_list=irrel_domains):
             return False
         return True

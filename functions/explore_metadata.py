@@ -5,6 +5,8 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
+# +++++EXPLORING CRAWLING METADATA+++++
+
 def document_count(directory, extension='.json'):
     count = 0
     for filename in os.listdir(directory):
@@ -78,3 +80,7 @@ def format_size(size):
         size /= 1024.0
         unit_index += 1
     return f"{size:.2f} {units[unit_index]}"
+
+
+# +++++EXPLORING DOCUMENT METADATA+++++
+

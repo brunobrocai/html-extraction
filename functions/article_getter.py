@@ -14,6 +14,9 @@ def trafilatura_standard_xml(html_str):
         include_formatting=False,
     )
 
+    if not xml:
+        return None
+
     # delete metadata from doc
     root = ET.fromstring(xml)
     root.attrib.clear()
@@ -54,9 +57,13 @@ def trafilatura_h1extra_xml(html_str):
 
 
 def text_from_xml(xml):
-    tree = ET.fromstring(xml)
-    texts = [elem.text for elem in tree.iter()]
-    rawtext = "\n\n".join([t for t in texts if t is not None])
+    tree = BS(xml, "lxml-xml")
+    main = tree.find("main")
+    texts = [
+        elem.get_text(separator=' ', strip=True)
+        for elem in main.find_all(recursive=False)
+    ]
+    rawtext = "\n\n".join([t.strip() for t in texts if t is not None])
     rawtext = re.sub(r"\n[ \t]*\n([ \t]*\n)+", "\n\n", rawtext)
     return rawtext
 
