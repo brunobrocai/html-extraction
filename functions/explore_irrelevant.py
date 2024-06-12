@@ -22,24 +22,29 @@ def get_subdomains(urls, print_=False):
     return subdomains
 
 
-def get_common_bytepairs(
-    urls, iterations=100, print_=False, all_subdomains=False
-):
-    if not all_subdomains:
-        url_ends = [url.split('/')[-1] for url in urls]
-    else:
-        url_ends = urls
+def get_url_ends(urls):
+    url_ends = set()
+    for url in urls:
+        if url.endswith('/'):
+            url_ends.add(url.split('/')[-2])
+        else:
+            url_ends.add(url.split('/')[-1])
+    return url_ends
+
+
+def bytepairs(urls, iterations):
     inventory = set()
     translations = {}
     iteration = 0
-    for end in url_ends:
+
+    for end in urls:
         for char in end:
             if char not in inventory:
                 inventory.add(char)
                 translations[char] = iteration
                 iteration += 1
 
-    url_ends = [[translations[char] for char in end] for end in url_ends]
+    url_ends = [[translations[char] for char in end] for end in urls]
 
     for n in range(iteration, iteration+iterations):
         pairs = {}
@@ -71,12 +76,25 @@ def get_common_bytepairs(
             new_url_ends.append(new_end)
         url_ends = new_url_ends
 
-    backtranslations = backtranslate(translations)
+    return translations
 
+
+def get_common_bytepairs(
+    urls, iterations=100,
+    print_=False, min_print_len=2, full_url=False
+):
+    if not full_url:
+        url_ends = get_url_ends(urls)
+    else:
+        url_ends = urls
+
+    translations = bytepairs(url_ends, iterations)
+
+    backtranslations = backtranslate(translations)
     if print_:
-        for bytepair in backtranslations:
-            if len(bytepair) > 1:
-                print(bytepair)
+        for transl in backtranslations:
+            if len(transl) >= min_print_len:
+                print(transl)
 
     return backtranslations
 
