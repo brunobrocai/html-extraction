@@ -83,4 +83,3 @@ def format_size(size):
 
 
 # +++++EXPLORING DOCUMENT METADATA+++++
-
