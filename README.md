@@ -18,6 +18,11 @@ You can install them with:
 pip install bs4 pyyaml tqdm trafilatura matplotlib markdown lxml
 ```
 
+You also need to install the git submodule LaBroDoodle:
+```bash
+pip install LaBroDoodle
+```
+
 ## Usage
 1. Run the 'explore' notebook to better understand the corpus and the structure of the html pages and the urls. Decide what information is important to you.
 2. Configure the yaml config file with info about the website and the desired output.
