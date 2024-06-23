@@ -10,14 +10,17 @@ def get_subdomains(urls, print_=False):
     Can also print the subdomains.
     """
 
-    subdomains = set()
+    subdomains = {}
     for url in urls:
         subdomain_list = url.split('/')
-        subdomains.update(subdomain_list[:-1])
+        for subdomain in subdomain_list[:-1]:
+            subdomains[subdomain] = subdomains.get(
+                subdomain, 0
+            ) + 1
 
     if print_:
-        for subdomain in subdomains:
-            print(subdomain)
+        for subdomain, count in subdomains.items():
+            print(subdomain, count)
 
     return subdomains
 
@@ -164,9 +167,13 @@ def is_relevant(url, irrel_pattern):
     return not re.search(irrel_pattern, url)
 
 
-def apply_function_dir(directory, function, *args):
+def apply_function_dir(
+    directory, function, iterations=None,
+):
     """Apply a function to all files in a directory."""
     matching_files = []
+    i = 0
+
     for root, _, files in os.walk(directory):
         for file in tqdm(
             files,
@@ -176,9 +183,12 @@ def apply_function_dir(directory, function, *args):
                 filepath = os.path.join(root, file)
                 with open(filepath, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                match = function(data, *args)
+                match = function(data)
                 if match:
                     matching_files.append(file)
+            i += 1
+            if iterations and i >= iterations:
+                break
     return matching_files
 
 
