@@ -2,7 +2,7 @@ import os
 import json
 import sys
 from tqdm import tqdm
-from LaBroDoodle.LaBroDoodle import corpusdirs
+from LaBroDoodle import corpusdirs
 from . import utils
 
 
