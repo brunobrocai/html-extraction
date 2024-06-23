@@ -3,6 +3,7 @@ import json
 from collections import Counter
 from datetime import datetime
 import matplotlib.pyplot as plt
+from bs4 import BeautifulSoup
 
 
 # +++++EXPLORING CRAWLING METADATA+++++
@@ -83,3 +84,31 @@ def format_size(size):
 
 
 # +++++EXPLORING DOCUMENT METADATA+++++
+
+def show_meta_elements(example_file):
+    with open(example_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    soup = BeautifulSoup(data['html_content'], 'lxml')
+
+    meta_data = soup.find_all('meta')
+
+    for datum in meta_data:
+        name = datum.get("name")
+        if name:
+            info = datum.get("content")
+        else:
+            name = datum.get("property")
+            if name:
+                info = datum.get("content")
+
+        if name:
+            print(f'Meta Element "{name}": {info}')
+
+    print(
+        '\nIf you find any of these useful, you can add',
+        'their name (given in quotiation marks "")',
+        'into the config.yaml section "metadata_keep".',
+        '\nKeywords however will be retrieved automatically,',
+        'no need to add that name to the config.'
+    )
