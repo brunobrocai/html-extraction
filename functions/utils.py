@@ -23,11 +23,10 @@ def markdown_to_text(text):
 
     text = '\n'.join(new_lines)
 
-    # md -> html -> text since BeautifulSoup can extract text cleanly
     html = markdown.markdown(text)
 
     # extract text
-    soup = BS(html, "html.parser")
+    soup = BS(html, "lxml")
     text = '\n'.join(soup.findAll(text=True))
 
     lines = text.split('\n')

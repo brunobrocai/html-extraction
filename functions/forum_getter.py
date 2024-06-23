@@ -36,6 +36,6 @@ def paradisi_entries(soup):
 if __name__ == '__main__':
     from bs4 import BeautifulSoup
     with open('test_files/paradisi_test1.html', 'r', encoding='utf-8') as f:
-        soup = BeautifulSoup(f, 'html.parser')
+        soup = BeautifulSoup(f, 'lxml')
         entries = paradisi_entries(soup)
         print(entries)

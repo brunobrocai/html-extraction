@@ -3,7 +3,7 @@ import os
 import json
 import yaml
 from tqdm import tqdm
-from LaBroDoodle import corpusdirs
+from LaBroDoodle.LaBroDoodle import corpusdirs
 from bs4 import BeautifulSoup as BS
 import trafilatura
 from . import meta_retriever
