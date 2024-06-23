@@ -39,7 +39,7 @@ class Cleaner():
         a new directory."""
         if not isinstance(value, str) and value is not None:
             raise ValueError("Goal directory must be a string.")
-        if value is None or not os.path.isdir(value):
+        if value is not None and not os.path.isdir(value):
             print("Goal directory does not exist or is not provided.")
             create = input("Do you want to create it? (y/n) ") == "y"
             if create:
@@ -47,6 +47,8 @@ class Cleaner():
                 print(f"Directory {value} created.")
             else:
                 print("In this case, please provide an existing directory.")
+        elif value is None:
+            pass
         self._goal_dir = value
 
     @property
