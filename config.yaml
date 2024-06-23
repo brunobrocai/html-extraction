@@ -1,3 +1,36 @@
+example:
+  irrelevant_subdomains:
+  metadata_keep:
+  checker_functions:
+  other_info_funcs:
+
+spektrum_medizin:
+  irrelevant_subdomains:
+    - /lexikon/
+    - /pdf/
+    - /abo/
+    - /inhaltsverzeichnis/
+    - /quiz/
+    - /podcast/
+    - /shop/
+    - /bundle/
+    - /alias/
+    - /video/
+  metadata_keep:
+    - og:title
+    - og:type
+    - og:description
+    - og:url
+    - article:publisher
+    - article:author
+    - og:image
+    - article:opinion
+    - article:location
+    - article:content_tier
+  checker_functions:
+  other_info_funcs:
+    - get_h1
+
 stern_gesundheit:
   irrelevant_subdomains:
     - template=gallery
@@ -36,6 +69,7 @@ apothekenumschau:
     - \.ico
     - /wirkstofflisten/
     - /beipackzettel/
+    - /english/
   metadata_keep:
     - author
     - article:section
@@ -95,6 +129,14 @@ tonline_gesundheit:
     - description
     - article:opinion
     - article:published_time
+  checker_functions:
+  other_info_funcs:
+    - get_h1
+
+
+gesundheitsinformation:
+  irrelevant_subdomains:
+  metadata_keep:
   checker_functions:
   other_info_funcs:
     - get_h1
