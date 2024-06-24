@@ -60,3 +60,14 @@ def rename_files_with_padded_index(directory):
             os.path.join(directory, filename),
             os.path.join(directory, new_filename)
         )
+
+
+def listdir_filetype(dirpath, filetype, absolute=False):
+    files = [
+        f for f in os.listdir(dirpath)
+        if f.endswith(filetype)
+    ]
+    if absolute:
+        files = [os.path.join(dirpath, f) for f in files]
+
+    return files

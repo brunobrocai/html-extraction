@@ -1,8 +1,6 @@
 import os
 import json
-import sys
 from tqdm import tqdm
-from LaBroDoodle import corpusdirs
 from . import utils
 
 
@@ -72,7 +70,7 @@ def dir_deduplicate_mdtext(
     criteria_checker
 ):
 
-    corpusfiles = corpusdirs.listdir_filetype(src, '.json', absolute=False)
+    corpusfiles = utils.listdir_filetype(src, '.json', absolute=False)
 
     for file in tqdm(corpusfiles):
         filepath = os.path.join(src, file)

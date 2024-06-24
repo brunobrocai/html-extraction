@@ -3,7 +3,6 @@ import os
 import json
 import yaml
 from tqdm import tqdm
-from LaBroDoodle import corpusdirs
 from bs4 import BeautifulSoup as BS
 import trafilatura
 from . import meta_retriever
@@ -190,7 +189,7 @@ class ArticleCleaner(Cleaner):
         config = self.read_config_section(subsections=config_subsections)
         self.configure_meta_retriever(config)
 
-        files = corpusdirs.listdir_filetype(
+        files = utils.listdir_filetype(
             self.src_dir, 'json', absolute=True
         )
 
